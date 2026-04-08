@@ -2,6 +2,8 @@
 package com.jiangye.jiangaiagent.advisor;
 
 import java.util.function.Function;
+
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.advisor.api.AdvisedRequest;
@@ -14,44 +16,29 @@ import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.model.MessageAggregator;
 import org.springframework.ai.model.ModelOptionsUtils;
 import reactor.core.publisher.Flux;
-
+/*
+*自定义日志Advisor
+* 打印info级别日志、只输出单次用户提示词和AI回复的文本
+ */
+@Slf4j
 public class MyLoggerAdvisor implements CallAroundAdvisor, StreamAroundAdvisor {
-    public static final Function<AdvisedRequest, String> DEFAULT_REQUEST_TO_STRING = (request) -> request.toString();
-    public static final Function<ChatResponse, String> DEFAULT_RESPONSE_TO_STRING = (response) -> ModelOptionsUtils.toJsonStringPrettyPrinter(response);
-    private static final Logger logger = LoggerFactory.getLogger(MyLoggerAdvisor.class);
-    private final Function<AdvisedRequest, String> requestToString;
-    private final Function<ChatResponse, String> responseToString;
     private int order;
-
-    public MyLoggerAdvisor() {
-        this(DEFAULT_REQUEST_TO_STRING, DEFAULT_RESPONSE_TO_STRING, 0);
-    }
-
-    public MyLoggerAdvisor(int order) {
-        this(DEFAULT_REQUEST_TO_STRING, DEFAULT_RESPONSE_TO_STRING, order);
-    }
-
-    public MyLoggerAdvisor(Function<AdvisedRequest, String> requestToString, Function<ChatResponse, String> responseToString, int order) {
-        this.requestToString = requestToString;
-        this.responseToString = responseToString;
-        this.order = order;
-    }
 
     public String getName() {
         return this.getClass().getSimpleName();
     }
 
     public int getOrder() {
-        return this.order;
+        return 0;
     }
 
     private AdvisedRequest before(AdvisedRequest request) {
-        logger.debug("request: {}", this.requestToString.apply(request));
+        log.info("AI Request:{}",request.userText());
         return request;
     }
 
     private void observeAfter(AdvisedResponse advisedResponse) {
-        logger.debug("response: {}", this.responseToString.apply(advisedResponse.response()));
+        log.info("AI Response:{}",advisedResponse.response().getResult().getOutput().getText());
     }
 
     public String toString() {

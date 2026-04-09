@@ -19,7 +19,7 @@ class LoveAppTest {
         String answer=loveApp.doChat(message,chatId);
         Assertions.assertNotNull(answer);
 
-        message="我想让我的另一半小琴更喜欢我";
+        message="我想让我的另一半更喜欢我";
         answer=loveApp.doChat(message,chatId);
         Assertions.assertNotNull(answer);
 

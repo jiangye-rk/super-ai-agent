@@ -1,13 +1,11 @@
 spring:
   application:
     name: jiang-ai-agent
-  profiles:
-    active: local
   datasource:
     mysql:
-      url: jdbc:mysql://localhost:3306/your-d-name?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-      username: your-username
-      password: your-password
+      url: jdbc:mysql://localhost:3306/jiang_ai_agent?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+      username: root
+      password: 123456
       driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       minimum-idle: 5
@@ -17,13 +15,13 @@ spring:
       connection-timeout: 20000
       pool-name: HikariPool-ChatMemory
     postgresql:
-      url: jdbc:postgresql://改为你的公网地址/yu_ai_agent
-      username: your-username
-      password: your-password
+      url: jdbc:postgresql://pgm-uf6c34ryjja77dhgvo.rwlb.rds.aliyuncs.com:5432/ye_ai_agent
+      username: ye_ai_agent
+      password: Jrk123456
 
   ai:
     dashscope:
-      api-key: your-api-key
+      api-key: sk-68d928c9d1da4e31acb220498eceaf6b
       chat:
         options:
           model: qwen-plus
@@ -35,37 +33,14 @@ spring:
         index-type: HNSW
         distance-type: COSINE_DISTANCE
         max-document-batch-size: 10
-# MyBatis 配置
+
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:mapper/**/*.xml
 
-# 日志配置
 logging:
   level:
     com.jiangye.jiangaiagent.chatmemory: DEBUG
     org.springframework.ai: DEBUG
-server:
-  port: 8123
-  servlet:
-    context-path: /api
-
-# springdoc-openapi config
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    tags-sorter: alpha
-    operations-sorter: alpha
-  api-docs:
-    path: /v3/api-docs
-  group-configs:
-    - group: 'default'
-      paths-to-match: '/**'
-      packages-to-scan: com.jiangye.jiangaiagent.controller
-# knife4j config
-knife4j:
-  enable: true
-  setting:
-    language: zh_cn

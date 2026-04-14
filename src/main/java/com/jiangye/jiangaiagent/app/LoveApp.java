@@ -12,9 +12,12 @@ import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.document.DocumentWriter;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Component;
 import java.util.List;
+import java.util.function.Consumer;
+
 import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_CONVERSATION_ID_KEY;
 import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_RETRIEVE_SIZE_KEY;
 @Component
@@ -62,8 +65,12 @@ public class LoveApp {
         log.info("report:{}", report);
         return report;
     }
+    //实‌现 “通过用户的推荐可能的恋爱对象 功能
+    /*@Resource
+    private VectorStore loveAppVectorStore;*/
     @Resource
-    private VectorStore loveAppVectorStore;
+    private VectorStore pgVectorVectorStore;
+
 
     public String doChatWithRag(String message, String chatId) {
         ChatResponse chatResponse = chatClient
@@ -73,8 +80,10 @@ public class LoveApp {
                         .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10))
 
                 .advisors(new MyLoggerAdvisor())
-
-                .advisors(new QuestionAnswerAdvisor(loveAppVectorStore))
+                //应用RAG 知识库问答
+               // .advisors(new QuestionAnswerAdvisor(loveAppVectorStore))
+                //应用RAG 检索增强服务（基于PgVector 向量存储）
+                .advisors(new QuestionAnswerAdvisor(pgVectorVectorStore))
                 .call()
                 .chatResponse();
         String content = chatResponse.getResult().getOutput().getText();

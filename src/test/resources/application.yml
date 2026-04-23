@@ -33,6 +33,10 @@ spring:
         index-type: HNSW
         distance-type: COSINE_DISTANCE
         max-document-batch-size: 10
+    mcp:
+      client:
+        stdio:
+          servers-configuration: classpath:mcp-servers.json
 
 mybatis:
   configuration:

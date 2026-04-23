@@ -1,20 +1,16 @@
 package com.jiangye.jiangaiagent.app;
 
-import com.jiangye.jiangaiagent.tools.ToolRegistration;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.ai.autoconfigure.vectorstore.pgvector.PgVectorStoreAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
-@Import(ToolRegistration.class)
+//@Import(ToolRegistration.class)
+
 @ActiveProfiles("local")
 class LoveAppTest {
     @Resource
@@ -76,5 +72,12 @@ class LoveAppTest {
         String chatId = UUID.randomUUID().toString();
         String answer = loveApp.doChatWithTools(message, chatId);
         Assertions.assertNotNull(answer);
+    }
+    @Test
+    void doChatWithMcp() {
+        String chatId = UUID.randomUUID().toString();
+
+        String message = "我的另一半居住在上海静安区，请帮我找到 5 公里内合适的约会地点";
+        String answer =  loveApp.doChatWithMcp(message, chatId);
     }
 }

@@ -26,7 +26,7 @@ spring:
       api-key: your-api-key
       chat:
         options:
-          model: qwen-plus
+          model: qwen-plus-latest
       embedding:
         options:
           model: text-embedding-v4
@@ -35,6 +35,10 @@ spring:
         index-type: HNSW
         distance-type: COSINE_DISTANCE
         max-document-batch-size: 10
+    mcp:
+      client:
+        stdio:
+          servers-configuration: classpath:mcp-servers.json
 # MyBatis 配置
 mybatis:
   configuration:

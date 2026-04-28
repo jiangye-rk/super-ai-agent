@@ -39,7 +39,7 @@ public abstract class BaseAgent {
     private ChatClient chatClient;
 
     //Message管理
-    private List<Message> messagesList=new ArrayList<>();
+    private List<Message> messageList=new ArrayList<>();
 
     /**
      * 运行代理
@@ -56,7 +56,7 @@ public abstract class BaseAgent {
         }
         this.state=AgentState.RUNNING;
 
-        messagesList.add(new UserMessage(userPrompt));
+        messageList.add(new UserMessage(userPrompt));
 
         List<String> results=new ArrayList<>();
         try {

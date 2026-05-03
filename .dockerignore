@@ -1,0 +1,83 @@
+# ===========================================
+# 后端项目 Docker 忽略文件
+# ===========================================
+
+# 构建输出目录
+target
+!target/*.jar
+build
+out
+
+# Maven 相关（保留 wrapper）
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/MavenWrapperDownloader.java
+
+# IDE 配置
+.idea
+*.iws
+*.iml
+*.ipr
+.vscode
+.classpath
+.project
+.settings
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 日志文件
+logs
+*.log
+log/
+
+# 测试相关
+test
+tests
+src/test
+!src/test/resources
+
+# Git 相关
+.git
+.gitignore
+.gitattributes
+.gitmodules
+
+# Docker 相关
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# 文档
+README.md
+CHANGELOG.md
+LICENSE
+*.md
+
+# 前端项目（如果在同一目录）
+jiang-ai-agent-frontend/
+
+# 其他
+*.zip
+*.tar.gz
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+# 环境配置文件（包含敏感信息）
+.env
+.env.local
+.env.*.local
+application-local.yml
+application-dev.yml
+application-prod.yml
+!application.yml
+!application-prod.yml

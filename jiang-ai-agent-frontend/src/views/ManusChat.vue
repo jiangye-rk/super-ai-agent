@@ -67,6 +67,7 @@
 <script setup>
 import { ref, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
+import { API_ENDPOINTS, getApiUrl } from '../config/api.js'
 
 const router = useRouter()
 const messagesContainer = ref(null)
@@ -139,7 +140,7 @@ const sendMessage = async () => {
   try {
     // 使用 SSE 连接
     const eventSource = new EventSource(
-      `/api/ai/manus/chat?message=${encodeURIComponent(message)}`
+      getApiUrl(API_ENDPOINTS.MANUS_CHAT, { message: message })
     )
 
     eventSource.onmessage = (event) => {

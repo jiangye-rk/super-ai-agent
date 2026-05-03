@@ -58,6 +58,7 @@
 <script setup>
 import { ref, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
+import { API_ENDPOINTS, getApiUrl } from '../config/api.js'
 
 const router = useRouter()
 const messagesContainer = ref(null)
@@ -123,7 +124,10 @@ const sendMessage = async () => {
   try {
     // 使用 SSE 连接
     const eventSource = new EventSource(
-      `/api/ai/love_app/chat/sse?message=${encodeURIComponent(message)}&chatId=${chatId.value}`
+      getApiUrl(API_ENDPOINTS.LOVE_CHAT, {
+        message: message,
+        chatId: chatId.value
+      })
     )
 
     eventSource.onmessage = (event) => {
